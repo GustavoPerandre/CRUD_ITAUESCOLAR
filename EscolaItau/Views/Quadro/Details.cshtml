@@ -1,0 +1,34 @@
+﻿@model EscolaItau.Models.Quadro
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Quadro de Disciplinas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Disciplina.titulo) : 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Disciplina.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Professor.nome) : 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Professor.nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.quadro_id }) |
+    @Html.ActionLink("Voltar para a Lista", "Index")
+</p>

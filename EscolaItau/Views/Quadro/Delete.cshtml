@@ -1,0 +1,40 @@
+﻿@model EscolaItau.Models.Quadro
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Tem certeza que deseja excluir este registro?</h3>
+<div>
+    <h4>Quadro de Disciplinas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Disciplina.titulo) : 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Disciplina.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Professor.nome) : 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Professor.nome)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-default" /> |
+            @Html.ActionLink("Voltar para a Lista", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="escolaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Disciplina">
+    <Key>
+      <PropertyRef Name="disciplina_id" />
+    </Key>
+    <Property Name="disciplina_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titulo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Professor">
+    <Key>
+      <PropertyRef Name="professor_id" />
+    </Key>
+    <Property Name="professor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Quadro">
+    <Key>
+      <PropertyRef Name="quadro_id" />
+    </Key>
+    <Property Name="quadro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_professor_id" Type="int" Nullable="false" />
+    <Property Name="fk_disciplina_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Disciplina_Quadro">
+    <End Role="Disciplina" Type="Self.Disciplina" Multiplicity="1" />
+    <End Role="Quadro" Type="Self.Quadro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Disciplina">
+        <PropertyRef Name="disciplina_id" />
+      </Principal>
+      <Dependent Role="Quadro">
+        <PropertyRef Name="fk_disciplina_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Professor_Quadro">
+    <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+    <End Role="Quadro" Type="Self.Quadro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Professor">
+        <PropertyRef Name="professor_id" />
+      </Principal>
+      <Dependent Role="Quadro">
+        <PropertyRef Name="fk_professor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="escolaModelStoreContainer">
+    <EntitySet Name="Disciplina" EntityType="Self.Disciplina" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Professor" EntityType="Self.Professor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Quadro" EntityType="Self.Quadro" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Disciplina_Quadro" Association="Self.FK_Disciplina_Quadro">
+      <End Role="Disciplina" EntitySet="Disciplina" />
+      <End Role="Quadro" EntitySet="Quadro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Professor_Quadro" Association="Self.FK_Professor_Quadro">
+      <End Role="Professor" EntitySet="Professor" />
+      <End Role="Quadro" EntitySet="Quadro" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

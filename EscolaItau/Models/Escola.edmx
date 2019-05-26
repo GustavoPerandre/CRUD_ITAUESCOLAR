@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="escolaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Disciplina">
+          <Key>
+            <PropertyRef Name="disciplina_id" />
+          </Key>
+          <Property Name="disciplina_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Professor">
+          <Key>
+            <PropertyRef Name="professor_id" />
+          </Key>
+          <Property Name="professor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Quadro">
+          <Key>
+            <PropertyRef Name="quadro_id" />
+          </Key>
+          <Property Name="quadro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_professor_id" Type="int" Nullable="false" />
+          <Property Name="fk_disciplina_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Disciplina_Quadro">
+          <End Role="Disciplina" Type="Self.Disciplina" Multiplicity="1" />
+          <End Role="Quadro" Type="Self.Quadro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disciplina">
+              <PropertyRef Name="disciplina_id" />
+            </Principal>
+            <Dependent Role="Quadro">
+              <PropertyRef Name="fk_disciplina_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Professor_Quadro">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+          <End Role="Quadro" Type="Self.Quadro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="professor_id" />
+            </Principal>
+            <Dependent Role="Quadro">
+              <PropertyRef Name="fk_professor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="escolaModelStoreContainer">
+          <EntitySet Name="Disciplina" EntityType="Self.Disciplina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Professor" EntityType="Self.Professor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quadro" EntityType="Self.Quadro" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Disciplina_Quadro" Association="Self.FK_Disciplina_Quadro">
+            <End Role="Disciplina" EntitySet="Disciplina" />
+            <End Role="Quadro" EntitySet="Quadro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Professor_Quadro" Association="Self.FK_Professor_Quadro">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="Quadro" EntitySet="Quadro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="escolaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Disciplina">
+          <Key>
+            <PropertyRef Name="disciplina_id" />
+          </Key>
+          <Property Name="disciplina_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Quadroes" Relationship="Self.FK_Disciplina_Quadro" FromRole="Disciplina" ToRole="Quadro" />
+        </EntityType>
+        <EntityType Name="Professor">
+          <Key>
+            <PropertyRef Name="professor_id" />
+          </Key>
+          <Property Name="professor_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Quadroes" Relationship="Self.FK_Professor_Quadro" FromRole="Professor" ToRole="Quadro" />
+        </EntityType>
+        <EntityType Name="Quadro">
+          <Key>
+            <PropertyRef Name="quadro_id" />
+          </Key>
+          <Property Name="quadro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_professor_id" Type="Int32" Nullable="false" />
+          <Property Name="fk_disciplina_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Disciplina" Relationship="Self.FK_Disciplina_Quadro" FromRole="Quadro" ToRole="Disciplina" />
+          <NavigationProperty Name="Professor" Relationship="Self.FK_Professor_Quadro" FromRole="Quadro" ToRole="Professor" />
+        </EntityType>
+        <Association Name="FK_Disciplina_Quadro">
+          <End Role="Disciplina" Type="Self.Disciplina" Multiplicity="1" />
+          <End Role="Quadro" Type="Self.Quadro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disciplina">
+              <PropertyRef Name="disciplina_id" />
+            </Principal>
+            <Dependent Role="Quadro">
+              <PropertyRef Name="fk_disciplina_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Professor_Quadro">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+          <End Role="Quadro" Type="Self.Quadro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="professor_id" />
+            </Principal>
+            <Dependent Role="Quadro">
+              <PropertyRef Name="fk_professor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="escolaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Disciplinas" EntityType="Self.Disciplina" />
+          <EntitySet Name="Professors" EntityType="Self.Professor" />
+          <EntitySet Name="Quadroes" EntityType="Self.Quadro" />
+          <AssociationSet Name="FK_Disciplina_Quadro" Association="Self.FK_Disciplina_Quadro">
+            <End Role="Disciplina" EntitySet="Disciplinas" />
+            <End Role="Quadro" EntitySet="Quadroes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Professor_Quadro" Association="Self.FK_Professor_Quadro">
+            <End Role="Professor" EntitySet="Professors" />
+            <End Role="Quadro" EntitySet="Quadroes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="escolaModelStoreContainer" CdmEntityContainer="escolaEntities">
+          <EntitySetMapping Name="Disciplinas">
+            <EntityTypeMapping TypeName="escolaModel.Disciplina">
+              <MappingFragment StoreEntitySet="Disciplina">
+                <ScalarProperty Name="disciplina_id" ColumnName="disciplina_id" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professors">
+            <EntityTypeMapping TypeName="escolaModel.Professor">
+              <MappingFragment StoreEntitySet="Professor">
+                <ScalarProperty Name="professor_id" ColumnName="professor_id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quadroes">
+            <EntityTypeMapping TypeName="escolaModel.Quadro">
+              <MappingFragment StoreEntitySet="Quadro">
+                <ScalarProperty Name="quadro_id" ColumnName="quadro_id" />
+                <ScalarProperty Name="fk_professor_id" ColumnName="fk_professor_id" />
+                <ScalarProperty Name="fk_disciplina_id" ColumnName="fk_disciplina_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

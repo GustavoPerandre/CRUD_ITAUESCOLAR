@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EscolaItau.Models.Quadro>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Quadro de Disciplinas</h2>
+
+<p>
+    @Html.ActionLink("+ Novo Registro", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Disciplina.titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Professor.nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disciplina.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Professor.nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.quadro_id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.quadro_id }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.quadro_id })
+        </td>
+    </tr>
+}
+
+</table>
